@@ -24,10 +24,10 @@ def normalize_input(input_data):
 
 class NeuralNet(object):
     FIRST_LAYER_SIZE = 12
-    SECOND_LAYER_SIZE = 12
-    THIRD_LAYER_SIZE = 12
-    FOURTH_LAYER_SIZE = 12
-    FIFTH_LAYER_SIZE = 12
+    SECOND_LAYER_SIZE = 8
+    THIRD_LAYER_SIZE = 8
+    FOURTH_LAYER_SIZE = 8
+    FIFTH_LAYER_SIZE = 8
     def __init__(self, cached_model=None, seed=None):
         self._graph = tf.Graph()
 
@@ -51,8 +51,8 @@ class NeuralNet(object):
             first_layer = tf.contrib.layers.fully_connected(flattened_frames, self.FIRST_LAYER_SIZE)
             second_layer = tf.contrib.layers.fully_connected(first_layer, self.SECOND_LAYER_SIZE)
             third_layer = tf.contrib.layers.fully_connected(second_layer, self.THIRD_LAYER_SIZE)
-            fourth_layer = tf.contrib.layers.fully_connected(third_layer, self.THIRD_LAYER_SIZE)
-            fifth_layer = tf.contrib.layers.fully_connected(fourth_layer, self.THIRD_LAYER_SIZE)
+            fourth_layer = tf.contrib.layers.fully_connected(third_layer, self.FOURTH_LAYER_SIZE)
+            fifth_layer = tf.contrib.layers.fully_connected(fourth_layer, self.FIFTH_LAYER_SIZE)
             sixth_layer = tf.contrib.layers.fully_connected(fifth_layer,1, activation_fn=None)
 
             # Group the planets back in frames.
