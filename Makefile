@@ -21,7 +21,7 @@ model_short_training: models/model_short_training.ckpt.meta
 
 models/model_long_training.ckpt.meta: data/${FILE} ${SOURCES_FOR_TRAINING}
 	mkdir -p models/
-	python -m tsmlstarterbot.train --model_name model_long_training --data C:/Users/2015/Downloads/HalitePython/data/${FILE} --games_limit 1000 --steps 5000 --seed ${SEED}
+	python -m tsmlstarterbot.train --model_name model_long_training --data C:/Users/2015/Halite2ML/data/${FILE} --games_limit 1000 --steps 5000 --seed ${SEED}
 
 models/model_short_training.ckpt.meta: data/${FILE} ${SOURCES_FOR_TRAINING}
 	mkdir -p models/
@@ -41,10 +41,10 @@ data: data/${FILE}
 
 data/${FILE}:
 	mkdir -p data
-	curl https://storage.googleapis.com/ml-bot-data/${FILE} -o C:/Users/2015/Downloads/HalitePython/data/${FILE}
+	curl https://storage.googleapis.com/ml-bot-data/${FILE} -o C:/Users/2015/Halite2ML/data/${FILE}
 
 bin/halite:
-	curl $(HALITE_BINARY_ADDRESS) -o C:/Users/2015/Downloads/HalitePython/data/halite_binary.zip
+	curl $(HALITE_BINARY_ADDRESS) -o C:/Users/2015/Halite2ML/data/halite_binary.zip
 	unzip halite_binary.zip -d bin
 	rm -rf halite_binary.zip
 
