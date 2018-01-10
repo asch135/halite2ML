@@ -13,19 +13,29 @@ SOURCES_FOR_TRAINING= tsmlstarterbot/common.py \
 	tsmlstarterbot/neural_net.py tsmlstarterbot/parsing.py \
 	tsmlstarterbot/train.py
 
-default: model_long_training
+SOURCES_FOR_TRAINING_BEGINNING= tsmlstarterbot/common.py \
+		tsmlstarterbot/neural_net_beginning.py tsmlstarterbot/parsing.py \
+		tsmlstarterbot/train_beginning.py
+
+default: model_long_training_beginning
 
 model_long_training: models/model_long_training.ckpt.meta
+
+model_long_training_beginning: models_beginning/model_long_training.ckpt.meta
 
 model_short_training: models/model_short_training.ckpt.meta
 
 models/model_long_training.ckpt.meta: data/${FILE} ${SOURCES_FOR_TRAINING}
 	mkdir -p models/
-	python -m tsmlstarterbot.train --model_name model_long_training --data C:/Users/2015/Halite2ML/data/${FILE} --games_limit 1000 --steps 5000 --seed ${SEED}
+	python -m tsmlstarterbot.train --model_name model_long_training --data C:/Users/2015/Halite2ML/data/ --games_limit 1000 --steps 5000 --seed ${SEED}
+models_beginning/model_long_training.ckpt.meta: data/${FILE}
+${SOURCES_FOR_TRAINING_BEGINNING}
+		mkdir -p models_beginning/
+		python -m tsmlstarterbot.train_beginning --model_name model_long_training --data C:/Users/2015/Halite2ML/data/{FILE} --games_limit 1000 --steps 5000 --seed ${SEED}
 
 models/model_short_training.ckpt.meta: data/${FILE} ${SOURCES_FOR_TRAINING}
 	mkdir -p models/
-	python -m tsmlstarterbot.train --model_name model_short_training --data data/${FILE} --games_limit 10 --steps 500 --seed ${SEED}
+	python -m tsmlstarterbot.train --model_name model_short_training --data data/ --games_limit 10 --steps 500 --seed ${SEED}
 
 clean_model:
 	rm -rf models

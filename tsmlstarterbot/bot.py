@@ -6,14 +6,15 @@ import time
 import hlt
 from tsmlstarterbot.common import *
 from tsmlstarterbot.neural_net import NeuralNet
-
+from tsmlstarterbot.neural_net_Beginning import NeuralNetBeginning
 class Bot:
     def __init__(self, location, name):
         current_directory = os.path.dirname(os.path.abspath(__file__))
         model_location = os.path.join(current_directory, os.path.pardir, "models", location)
+        model_location_beginning = os.path.join(current_directory, os.path.pardir, "models_beginning",location)
         self._name = name
         self._neural_net = NeuralNet(cached_model=model_location)
-
+        self._neural_net_beginning = NeuralNetBeginning(cached_model=model_location_beginning)
         # Run prediction on random data to make sure that code path is executed at least once before the game starts
         random_input_data = np.random.rand(PLANET_MAX_NUM, PER_PLANET_FEATURES)
         predictions = self._neural_net.predict(random_input_data)
@@ -36,6 +37,17 @@ class Bot:
             features = self.produce_features(game_map)
 
             # Find predictions which planets we should send ships to.
+            countMyShips = 0;
+            countEnemyMinID;
+            countEnemy = 0;
+            for player in game_map.all_players():
+                for ship in player.all_ships():
+                    if player == game_map.get_me():
+                        countMyShips++
+                    else:
+                        countEnemy++
+            if(countEnemy/(game_map.all_players-1)<countMyShips):
+                self._neural_net
             predictions = self._neural_net.predict(features)
 
             # Use simple greedy algorithm to assign closest ships to each planet according to predictions.
